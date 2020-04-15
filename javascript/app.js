@@ -35,7 +35,16 @@ fetch("https://api.covid19api.com/dayone/country/turkey")
             }
         }
 
-        var apexYAxisValue = 10;
+        var apexYAxisValue = 1;
+        addZero = (num) => {
+            const valueArray = [1];
+            for (let index = 0; index <= num; index++) {
+                valueArray.push('0');
+            }
+            const removeComa = valueArray.join('');
+            return removeComa.toString();
+        }
+
         const options = {
             chart: {
                 height: 450,
@@ -52,51 +61,59 @@ fetch("https://api.covid19api.com/dayone/country/turkey")
             ],
             xaxis: {
                 categories: xArray,
-                // labels: {
-                //     show: true,
-                //     align: 'right',
-                //     minWidth: 0,
-                //     maxWidth: 160,
-                //     style: {
-                //         colors: [],
-                //         fontSize: '12px',
-                //         fontFamily: 'Helvetica, Arial, sans-serif',
-                //         fontWeight: 400,
-                //         cssClass: 'apexcharts-yaxis-label',
-                //     },
-                //     offsetX: 0,
-                //     offsetY: 0,
-                //     rotate: 0,
-                //     formatter: () => { 
-                //         apexYAxisValue = apexYAxisValue * 10;
-                //         return apexYAxisValue 
-                //     },
-                // },
+                labels: {
+                    show: true,
+                    align: 'right',
+                    minWidth: 0,
+                    rotate: -45,
+                    maxWidth: 160,
+                    offsetX: 0,
+                    offsetY: 0,
+                    rotate: -45,
+                    formatter: () => {
+                        apexYAxisValue = apexYAxisValue * 10;
+                        return apexYAxisValue
+                    },
+                },
             },
-            // yaxis: {
-            //     labels: {
-            //         show: true,
-            //         align: 'right',
-            //         minWidth: 0,
-            //         maxWidth: 160,
-            //         style: {
-            //             colors: [],
-            //             fontSize: '12px',
-            //             fontFamily: 'Helvetica, Arial, sans-serif',
-            //             fontWeight: 400,
-            //             cssClass: 'apexcharts-yaxis-label',
-            //         },
-            //         offsetX: 0,
-            //         offsetY: 0,
-            //         rotate: 0,
-            //         formatter: () => { 
-            //             apexYAxisValue = apexYAxisValue * 10;
-            //             return apexYAxisValue 
-            //         },
-            //     },
-            // },
+            yaxis: {
+                tickPlacement: 'on',
+                labels: {
+                    show: true,
+                    align: 'right',
+                    minWidth: 0,
+                    rotate: -45,
+                    rotateAlways: true,
+                    maxWidth: 160,
+                    marginLeft: '40px',
+                    style: {
+                        colors: [],
+                        fontSize: '12px',
+                        fontFamily: 'Helvetica, Arial, sans-serif',
+                        fontWeight: 400,
+                        cssClass: 'apexcharts-yaxis-label',
+                    },
+                    offsetX: 30,
+                    offsetY: 0,
+                    rotate: -45,
+                    formatter: (index, array) => {
+                        // console.log(array);
+                        return (`${addZero(array)}`)
+                    },
+                },
+            },
+            grid: {
+                // margin: {
+                //     left: 40,
+                //     right: 40
+                // },
+                padding: {
+                    left: 40, // or whatever value that works
+                    right: 50 // or whatever value that works
+                }
+            },
             plotOptions: {
-                bar: {
+                line: {
                     horizontal: false
                 }
             },
@@ -115,6 +132,9 @@ fetch("https://api.covid19api.com/dayone/country/turkey")
                 style: {
                     fontSize: '16px',
                 }
+            },
+            tooltip: {
+                enabled: false,
             }
         };
         // init chart
